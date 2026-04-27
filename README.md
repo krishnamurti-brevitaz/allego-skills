@@ -6,7 +6,7 @@ A unified repository for AI skills used in the Allego project. Supports both **G
 
 ### 1. Clone the Repo
 ```bash
-git clone <your-repo-url> allego-skills
+git clone https://github.com/krishnamurti-brevitaz/allego-skills.git
 ```
 
 ### 2. Run the Installer
@@ -18,17 +18,19 @@ chmod +x install.sh
 
 ## 🤖 Platform Support
 
-### Claude Code (Recommended)
-When you choose **Option 2 (Claude Code)** in the installer:
-- It creates a `.claude/skills/` directory in your current project.
-- It symlinks the selected skills there.
-- It automatically updates your project's `CLAUDE.md` so Claude knows the skills exist.
-- **Usage**: Just ask Claude: *"Generate feature context for X using the skill in .claude/skills"*
+### Claude Code (Team's Primary Choice)
+The installer provides two options for Claude Code:
+1.  **Global**: Installs to `~/.claude/skills/`. Use this if you want the skills available across all your projects.
+2.  **Specific Project**: Installs to `./.claude/skills/` within a project of your choice and automatically updates its `CLAUDE.md`.
+
+**💡 How to make Claude "see" the skill:**
+- If using the **Project** installation, the `CLAUDE.md` update tells Claude where to look.
+- If Claude still doesn't recognize it, try asking: *"Check the custom skills available in .claude/skills/"* or *"Use the feature-context-generator skill to analyze X."*
+- For best results, ensure you have the `using-superpowers` skill active in your environment, as it handles skill discovery automatically.
 
 ### Gemini CLI
-When you choose **Option 1 (Gemini CLI)**:
-- It links skills to `~/.gemini/skills/` for global availability.
-- **Usage**: Use the `activate_skill` tool as usual.
+- Installs to `~/.gemini/skills/` for global availability.
+- **Usage**: Use the `activate_skill` tool.
 
 ## 📂 Included Skills
 - **feature-context-generator**: Functional documentation engine.
