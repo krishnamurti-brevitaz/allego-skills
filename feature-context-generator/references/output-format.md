@@ -1,59 +1,47 @@
 # Output File Requirements
 
-The output must be generated as either a single consolidated markdown file or a set of structured markdown files in a directory.
+The output must be generated as a single consolidated markdown file `/feature-context/<feature-name>.md`.
 
-## Multiple Files Structure (Folder)
+## Content Structure
 
-Generated in `/feature-context/<feature-name>/`:
+The file MUST contain the following 7 sections in order:
 
-### 00_overview.md
-- **Purpose**: High-level description of what the feature does.
-- **Actors**: Users or systems that interact with the feature.
-- **Trigger**: The event that starts the execution.
-- **Outcome**: The expected final state or result.
+### 1. Feature Overview
+- **Name**: The functional name of the feature.
+- **Problem it solves**: A clear description of the functional gap or requirement addressed.
+- **Users / roles**: The primary actors (internal/external) interacting with the feature.
+- **Success criteria**: Functional outcomes that define successful execution.
 
-### 01_user_flows.md
-- **Content**: Numbered steps representing the interaction.
-- **Paths**: Include both success and failure paths.
-- **Granularity**: Each step must be a single, discrete action.
+### 2. Entities & Roles
+- **Key entities & relationships**: The primary functional objects and how they relate (e.g., "A User has one Profile").
+- **Roles + permission matrix**: Definition of roles and their allowed actions within the feature.
 
-### 02_business_rules.md
-- **Format**: One rule per line.
-- **Structure**: IF → THEN format for conditional logic.
+### 3. Configuration
+- **Tenant/company configs**: System-level or company-level settings that modify behavior.
+- **Defaults vs overrides**: Standard functional behavior and how it is explicitly changed by configuration.
 
-### 03_data_contract.md
-- **Content**: Input/output tables.
-- **Detail**: Field-level definitions, types, and constraints.
-- **Enumerations**: Explicit lists of allowed values where applicable.
+### 4. Usage Context
+- **Entry points**: Functional triggers such as a Drawer, Room, Channel, or API call.
+- **Context-specific behavior**: How the feature adapts depending on where it is triggered from.
 
-### 04_edge_cases.md
-- **Content**: Exhaustive list of edge conditions.
-- **Definition**: Clear system behavior defined for each edge case.
+### 5. Capabilities
+List each discrete capability of the feature:
+- **Description**: Functional purpose.
+- **Inputs / Outputs**: Data required and returned.
+- **Dependencies**: Functional reliance on other features or data states.
 
-### 05_constraints.md
-- **Content**: Functional constraints only (e.g., idempotency, ordering).
+### 6. User Flows
+- **Primary flows**: Step-by-step numbered sequence for the happy path.
+- **Alternate / failure flows**: Functional behavior when validations fail or exceptions occur.
 
-### 06_examples.md
-- **Requirement**: Minimum of 3 examples.
-  1. Valid case
-  2. Invalid case
-  3. Edge case
-
-### 07_non_goals.md
-- **Content**: Explicit exclusions (what the feature does NOT do).
-
-### 08_invariants.md
-- **Content**: Conditions that must always hold true throughout the execution.
-
-## Single File Structure (Consolidated)
-
-Generated as `/feature-context/<feature-name>.md`.
-
-- **H1 Header**: Feature Name
-- **H2 Headers**: For each of the sections listed above (Overview, User Flows, Business Rules, Data Contract, Edge Cases, Constraints, Examples, Non-Goals, Invariants).
-- **Horizontal Rule**: Use `---` between sections if it improves readability.
+### 7. Business Rules
+- **Conditions → behavior**: IF-THEN rules governing functional logic.
+- **Exceptions**: Explicit functional cases that diverge from standard rules.
 
 ---
 
 **FINAL OUTPUT FORMAT:**
-Return the content using the `=== <filename> ===` separator format.
+Return the content as a single markdown block using the following header:
+
+=== /feature-context/<feature-name>.md ===
+<content>
