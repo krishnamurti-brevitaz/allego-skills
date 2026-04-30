@@ -10,7 +10,6 @@ The file MUST contain the following 7 sections in order:
 - **Name**: The functional name of the feature.
 - **Problem it solves**: A clear description of the functional gap or requirement addressed.
 - **Users / roles**: The primary actors (internal/external) interacting with the feature.
-- **Success criteria**: Functional outcomes that define successful execution.
 
 ### 2. Entities & Roles
 - **Key entities & relationships**: The primary functional objects and how they relate (e.g., "A User has one Profile").

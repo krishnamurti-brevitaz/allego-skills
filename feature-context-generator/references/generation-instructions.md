@@ -85,40 +85,7 @@ Convert raw extracted behavior into consistent, deterministic format.
 - Convert implicit logic into IF → THEN rules.
 - Ensure no ambiguity remains.
 
-## PHASE 4 — INTENT RECONCILIATION (OPTIONAL)
-
-**INPUT:**
-- Jira / feature description (if provided).
-
-**TASK:**
-- Compare code behavior vs stated intent.
-
-**RULES:**
-- Codebase = source of truth.
-- If mismatch:
-  - **STOP EXECUTION.** Do NOT proceed to Phase 5.
-  - Present the mismatch to the user (Jira Intent vs. Actual Code Behavior).
-  - Ask the user to decide on the next action:
-    1. **Update Functional Context**: Documentation will reflect the current code behavior.
-    2. **Flag as Defect**: Documentation will reflect the intended behavior (Jira), and a bug should be recorded.
-    3. **Research**: Investigate why the code deviates from the intent before proceeding.
-    4. **Other**: Provide a custom instruction or alternative decision.
-
-**OUTPUT (INTERNAL JSON):**
-```json
-{
-  "mismatches": [
-    {
-      "intent": "",
-      "actual_behavior": "",
-      "impact": ""
-    }
-  ],
-  "user_decision": "pending | context-update | bug-flag | research | custom"
-}
-```
-
-## PHASE 5 — FUNCTIONAL CONTEXT GENERATION
+## PHASE 4 — FUNCTIONAL CONTEXT GENERATION
 
 **OBJECTIVE:**
 Convert normalized behavior into the structured 7-section single-file format.
@@ -135,7 +102,7 @@ Convert normalized behavior into the structured 7-section single-file format.
 **OUTPUT FORMAT:**
 Create a single markdown file `/feature-context/<feature-name>.md` following the structure in `output-format.md`.
 
-## PHASE 6 — VALIDATION & CONSISTENCY CHECK
+## PHASE 5 — VALIDATION & CONSISTENCY CHECK
 
 **MANDATORY CHECKS:**
 - All inputs have validation rules.
