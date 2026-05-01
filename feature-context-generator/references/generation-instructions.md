@@ -9,6 +9,10 @@ This reference provides the detailed procedural rules for each phase of the func
 - Detect entry points (controllers, handlers, jobs).
 - Identify usage contexts (e.g., Drawer, Room, Channel, API).
 - Identify relevant modules and dependencies.
+- Scan central config/constants files (e.g., `IConfig.java`, `Constants.java`, `config.ts`) for all keys whose names contain the feature's vocabulary (e.g., the feature name or its known aliases). Collect these as `config_keys` regardless of whether they appear in the traced code paths.
+- Scan SQL schema files (e.g., `create.sql` in `allego-apiserver`) for table definitions, column names, and role/permission structures whose names contain the feature's vocabulary. Collect matching tables and columns as `schema_entities` regardless of whether they appear in the traced code paths.
+- **Trace config accesses from code paths (derived-feature pass):** After the vocabulary scan, grep the feature's own source files for all config key accesses (e.g., `IConfig.Keys.*`, `getConfig(`, `getConfigValue(`, `hasConfigMatch(`). For each config key found this way that was NOT already captured by the vocabulary scan, add it to `config_keys` and mark it as `source: "code-path"`. This catches configs inherited from parent or platform features that the new feature relies on but whose names do not contain the feature's vocabulary.
+- **Identify parent/upstream features:** If the feature's entry points extend, delegate to, or are derived from another named feature (e.g., SparkDoc built on top of HTML5 App, Lesson Builder extending a base content type), identify that parent feature. Then repeat the vocabulary scan of config/constants files using the parent feature's vocabulary as well. Add any newly discovered keys to `config_keys` with `source: "parent-feature"` and `parent: "<parent feature name>"`.
 
 **OUTPUT (INTERNAL JSON):**
 ```json
@@ -17,13 +21,19 @@ This reference provides the detailed procedural rules for each phase of the func
   "entry_points": [],
   "usage_contexts": [],
   "relevant_components": [],
-  "excluded_components": []
+  "excluded_components": [],
+  "config_keys": [],
+  "parent_features": [],
+  "schema_entities": []
 }
 ```
 
 **RULES:**
 - Focus only on code paths relevant to the feature.
 - Avoid scanning entire repository blindly.
+- Config/constants files are an exception: always scan them by keyword, do not rely solely on code-path tracing to discover configs.
+- SQL schema files are an exception: always scan them by keyword to discover table structure and role definitions relevant to the feature.
+- The code-path config trace and parent-feature scan are mandatory, not optional. A feature that delegates to a parent feature will gate on the parent's configs — omitting them produces an incomplete and misleading context document.
 
 ## PHASE 2 — CODE BEHAVIOR EXTRACTION
 
